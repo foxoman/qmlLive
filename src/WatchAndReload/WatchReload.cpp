@@ -2,12 +2,13 @@
 #include "WatchReload.h"
 #include "WatchDirPath.h"
 #include <iostream>
-using namespace std;
 
 WatchReload::WatchReload(QQmlApplicationEngine *engine)
 {
     this->engine = engine;
-    this->firstrootobj = this->engine->rootObjects().first();
+    // If the main.qml has an ApplicaitonWindow, it need to findchild called loader
+    // else the first rootObjects itself is the loader,can test them according to the name of object
+    this->firstrootobj = this->engine->rootObjects().first()->findChild<QObject*>("loader");
 }
 
 void WatchReload::reloadApp()
